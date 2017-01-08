@@ -84,65 +84,43 @@ a.inject(a.max) { |min, item| min=item if(item<min && item.odd?); min }
 
 # 45. Дан целочисленный массив. Найти минимальный положительный элемент.
 a=[1,2,3,-3,-9,2,-1]
-head :190 > min=a.max
- => 3
-head :191 > a.each { |item| min=item if(item<min && item>0) }
- => [1, 2, 3, -3, -9, 2, -1]
-head :192 > min
- => 1
+min=a.inject(a.max) { |min, item| min=item if(item<min && item>0); min }
+min<0 ? nil : min
 
 # 48. Дан целочисленный массив и интервал a..b. Найти максимальный из элементов в этом интервале.
-a=[1,-5,6,4,8,12,2]
-1)
-2.2.3 :007 > max = range.first
- => 1
-2.2.3 :008 > a.each { |item| max = item if(item>max && range.include?(item)) }
- => [1, -5, 6, 4, 8, 12, 2]
-2.2.3 :009 > max
- => 8
-2)
+a=[1,-5,6,4,8,12,2]\
 a.select { |item| range.include?(item) }.max
 
 # 51. Дан целочисленный массив. Найти количество элементов, расположенных после первого максимального.
 a=[1,0,2,3,2,5,6,6,2,1,1]
-2.3.0 :013 > a.size - a.index(a.max) - 1
- => 4
+a.size - 1 - a.index(a.max)
 
 # 54. Дан целочисленный массив. Найти количество элементов, расположенных перед последним минимальным.
 a=[1,0,2,3,0,5,6,6,2,1,1]
-2.3.0 :016 > a.rindex(a.min)
+a.rindex(a.min)
 
 # 57. Дан целочисленный массив. Найти индекс первого экстремального (то есть минимального или максимального) элемента.
 a=[1,0,2,3,0,5,6,6,2,1,1]
-2.3.0 :020 > min_index = a.index(a.min)
- => 1
-2.3.0 :021 > max_index = a.index(a.max)
- => 6
-2.3.0 :022 > min_index < max_index ? min_index : max_index
- => 1
+min_index = a.index(a.min)
+max_index = a.index(a.max)
+min_index < max_index ? min_index : max_index
 
 # 60. Дан целочисленный массив. Найти количество элементов, между первым и последним максимальным.
 a=[1,0,2,6,0,5,6,6,2,1,1]
-2.3.0 :026 > a.rindex(a.max) - a.index(a.max) - 1
- => 3
+a.rindex(a.max) - a.index(a.max) - 1
 
 # 63. Дан целочисленный массив. Найти максимальное количество подряд идущих минимальных элементов.
-a=[0,0,2,6,0,5,6,6,0,0,0,0]
+a=[0,0,2,6,0,5,6,6,0,0,0,0,3,0,0]
 min = a.min
-find_min = true
 min_in_a_row = 0
-2.3.0 :036 > a[a.index(min)..a.size-1].each do |item|
-2.3.0 :037 >       if item == min
-2.3.0 :038?>         find_min = true
-2.3.0 :039?>         min_in_a_row += 1
-2.3.0 :040?>       else
-2.3.0 :041 >           find_min = false
-2.3.0 :042?>         min_in_a_row = 0
-2.3.0 :043?>       end
-2.3.0 :044?>   end
- => [0, 0, 2, 6, 0, 5, 6, 6, 0, 0, 0, 0]
-2.3.0 :045 > min_in_a_row
- => 4
+a.each_with_object([]) do |item, min_in_a_row_arr|
+  if item == min
+    min_in_a_row += 1
+  else
+    min_in_a_row = 0
+  end
+  min_in_a_row_arr << min_in_a_row
+end.max
 
 # 66. Дан целочисленный массив. Вывести вначале все его нечетные элементы, а затем - четные.
 a=[0,0,2,6,1,5,6,6,5,3,0,0]
@@ -219,21 +197,21 @@ head :242 > a.select { |item| item.odd? }.size
 k=12
 a=[1,23,4,2,4]
 head :247 > a.detect { |item| item>=k }.nil?
- => false 
+ => false
 head :248 > a=[1,5,6,3]
- => [1, 5, 6, 3] 
+ => [1, 5, 6, 3]
 head :249 > a.detect { |item| item>=k }.nil?
- => true 
+ => true
 
 # 96. Дан целочисленный массив и число К. Вывести индекс первого элемента, большего К.
 k=12
 a=[1,5,6,3]
 head :250 > a.index(a.detect { |item| item>k })
- => nil 
+ => nil
 head :251 > a=[1,45,6,3]
- => [1, 45, 6, 3] 
+ => [1, 45, 6, 3]
 head :252 > a.index(a.detect { |item| item>k })
- => 1 
+ => 1
 
 # 99. Дан целочисленный массив. Вывести индексы элементов, которые меньше своего правого соседа, и количество таких чисел.
 a=[23,4,5,3,22,25,6,34]
@@ -242,23 +220,23 @@ head :255 > a[0..a.size-2].select.with_index { |item, i| puts i if(item<a[i+1]);
 3
 4
 6
- => 4 
+ => 4
 
 # 102. Дан целочисленный массив. Проверить, образует ли он возрастающую последовательность.
 a=[23,4,5,3,22,25,6,34]
 head :267 > a[1..a.size-1].select.with_index(1) { |item, i| item>a[i-1] }.size+1==a.size
- => false 
+ => false
 head :268 > a=[1,2,3,4,5,6,7]
- => [1, 2, 3, 4, 5, 6, 7] 
+ => [1, 2, 3, 4, 5, 6, 7]
 head :269 > a[1..a.size-1].select.with_index(1) { |item, i| item>a[i-1] }.size+1==a.size
- => true 
+ => true
 
 # 105. Дан целочисленный массив. Если данный массив образует убывающую последовательность, то вывести nil, в противном случае вывести номер первого числа, нарушающего закономерность.
 a=[1,2,3,4,5,6,7]
 head :270 > a.index(a[1..a.size-1].detect.with_index(1) { |item, i| item>a[i-1] })
- => 1 
+ => 1
 head :271 > a=[5,4,3,2,1]
- => [5, 4, 3, 2, 1] 
+ => [5, 4, 3, 2, 1]
 head :272 > a.index(a[1..a.size-1].detect.with_index(1) { |item, i| item>a[i-1] })
  => nil
 
@@ -271,13 +249,13 @@ head :275 > a.each_with_index { |item, i| a[i]=a[i]**k }
 # 111. Дан целочисленный массив. Переставить в обратном порядке элементы массива, расположенные между его минимальным и максимальным элементами.
 a=[5,23,4,67,1,23,56,0]
 head :285 > min_index=a.index(a.min)
- => 7 
+ => 7
 head :286 > max_index=a.index(a.max)
- => 3 
+ => 3
 head :287 > range=min_index<max_index ? min_index..max_index : max_index..min_index
- => 3..7 
+ => 3..7
 head :288 > a[range]=a[range].reverse
- => [0, 56, 23, 1, 67] 
+ => [0, 56, 23, 1, 67]
 head :289 > a
  => [5, 23, 4, 0, 56, 23, 1, 67]
 
