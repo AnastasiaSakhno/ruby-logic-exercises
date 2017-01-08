@@ -112,7 +112,6 @@ a.rindex(a.max) - a.index(a.max) - 1
 # 63. Дан целочисленный массив. Найти максимальное количество подряд идущих минимальных элементов.
 a=[0,0,2,6,0,5,6,6,0,0,0,0,3,0,0]
 min = a.min
-min_in_a_row = 0
 a.each_with_object([]) do |item, min_in_a_row_arr|
   if item == min
     min_in_a_row += 1
@@ -124,63 +123,52 @@ end.max
 
 # 66. Дан целочисленный массив. Вывести вначале все его нечетные элементы, а затем - четные.
 a=[0,0,2,6,1,5,6,6,5,3,0,0]
-2.3.0 :059 > a.select { |item| item.odd? } + a.select { |item| item.even? }
- => [1, 5, 5, 3, 0, 0, 2, 6, 6, 6, 0, 0]
+a.select { |item| item.odd? } + a.select { |item| item.even? }
 
 # 69. Дано вещественное число R и массив вещественных чисел. Найти два элемента массива, сумма которых наиболее близка к данному числу.
 a=[1.56, 7.22, 12.1, -1.45, 6.34]
 r=11.5
-2.3.0 :063 > a.combination(2).to_a.min { |comb| (comb[0]+comb[1]-r).abs }
- => [1.56, 7.22]
+a.combination(2).to_a.min { |comb| (comb[0]+comb[1]-r).abs }
 
 # 72. Дан целочисленный массив. Удалить все элементы, встречающиеся более двух раз.
 a=[0,0,2,6,1,5,6,6,5,3,0,0]
-2.3.0 :066 > a.uniq
-  => [0, 2, 6, 1, 5, 3]
- 2.3.0 :070 > a.map.with_object([]) { |item, acc| acc << item if !acc.include?(item) }
- => [0, 2, 6, 1, 5, 3]
+a.delete_if { |item| a.count(item)>2 }
 
 # 75. Дан целочисленный массив. Найти среднее арифметическое модулей его элементов.
 a=[1,2,3,-3,-9,2,-1]
-head :205 > a.inject(0) { |sum, item| sum+=item.abs }.to_f / a.size
- => 3.0
+a.inject(0.0) { |sum, item| sum+=item.abs } / a.size
 
 # 78. Дано целое число. Найти произведение его цифр.
 num=4354628684
-head :213 > num.to_s.split('').inject(1) { |res, item| res*=item.to_i }
- => 4423680
-2) head :214 > dup = num
- => 4354628684
-head :215 > res =1
- => 1
-head :216 > while dup != 0 do
-head :217 >       res *= dup%10
-head :218?>     dup /= 10
-head :219?>   end
- => nil
-head :220 > res
- => 4423680
+# 1)
+num.to_s.split('').inject(1) { |res, item| res*=item.to_i }
+# 2)
+dup=num
+res=1
+while dup != 0 do
+  res *= dup%10
+  dup /= 10
+end
+res
+# 3)
+num.to_s.chars.map(&:to_i).reduce(:*)
 
 # 81. Дан дипапазон a..b. Получить массив из чисел, расположенных в этом диапазоне (исключая сами эти числа), в порядке их убывания, а также размер этого массива.
-head :229 > range=(1..12)
- => 1..12
-head :231 > a=range.to_a[1..range.size-2].reverse
- => [11, 10, 9, 8, 7, 6, 5, 4, 3, 2]
-head :232 > a.size
- => 10
+range=(1..12)
+a=range.to_a[1..range.size-2].reverse
+a.size
 
 # 84. Дано натуральное число N. Найти результат следующего произведения 1*2*…*N.
-head :233 > n=5
- => 5
-head :234 > def factorial(n)
-head :235?>     return 1 if n <= 1
-head :236?>     return n * factorial(n-1)
-head :237?>   end
- => :factorial
-head :238 > factorial n
- => 120
-2) head :239 > (1..n).inject(:*)
- => 120
+n=5
+# 1)
+def factorial(n)
+  return 1 if n <= 1
+  return n * factorial(n-1)
+end
+factorial n
+# 2)
+(1..n).inject(:*)
+
 
 # 87. Дан целочисленный массив. Найти все четные элементы.
 head :240 > a=[2,34,6,7,1,22,343]
