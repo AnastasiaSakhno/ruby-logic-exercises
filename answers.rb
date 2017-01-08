@@ -169,46 +169,40 @@ factorial n
 # 2)
 (1..n).inject(:*)
 
-
 # 87. Дан целочисленный массив. Найти все четные элементы.
-head :240 > a=[2,34,6,7,1,22,343]
- => [2, 34, 6, 7, 1, 22, 343]
-head :241 > a.select { |item| item.even? }
- => [2, 34, 6, 22]
+a=[2,34,6,7,1,22,343]
+a.select { |item| item.even? }
 
 # 90. Дан целочисленный массив. Найти количество нечетных элементов.
 a=[2,34,6,7,1,22,343]
-head :242 > a.select { |item| item.odd? }.size
- => 3
+a.select { |item| item.odd? }.size
 
 # 93. Дан целочисленный массив и число К. Если все элементы массива меньше К, то вывести true; в противном случае вывести false.
 k=12
 a=[1,23,4,2,4]
-head :247 > a.detect { |item| item>=k }.nil?
- => false
-head :248 > a=[1,5,6,3]
- => [1, 5, 6, 3]
-head :249 > a.detect { |item| item>=k }.nil?
- => true
+a.detect { |item| item>=k }.nil?
+ # => false
+a=[1,5,6,3]
+a.detect { |item| item>=k }.nil?
+ # => true
 
 # 96. Дан целочисленный массив и число К. Вывести индекс первого элемента, большего К.
 k=12
 a=[1,5,6,3]
-head :250 > a.index(a.detect { |item| item>k })
- => nil
-head :251 > a=[1,45,6,3]
- => [1, 45, 6, 3]
-head :252 > a.index(a.detect { |item| item>k })
- => 1
+a.index(a.detect { |item| item>k })
+ # => nil
+a=[1,45,6,3]
+a.index(a.detect { |item| item>k })
+ # => 1
 
 # 99. Дан целочисленный массив. Вывести индексы элементов, которые меньше своего правого соседа, и количество таких чисел.
 a=[23,4,5,3,22,25,6,34]
-head :255 > a[0..a.size-2].select.with_index { |item, i| puts i if(item<a[i+1]); item<a[i+1] }.size
-1
-3
-4
-6
- => 4
+a[0..a.size-2].select.with_index { |item, i| puts i if(item<a[i+1]); item<a[i+1] }.size
+# 1
+# 3
+# 4
+# 6
+#  => 4
 
 # 102. Дан целочисленный массив. Проверить, образует ли он возрастающую последовательность.
 a=[23,4,5,3,22,25,6,34]
