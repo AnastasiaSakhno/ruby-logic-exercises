@@ -229,14 +229,14 @@ a.map! { |item| item=item**k }
 
 # 111. Дан целочисленный массив. Переставить в обратном порядке элементы массива, расположенные между его минимальным и максимальным элементами.
 a=[5,23,4,67,1,23,56,0]
-head :285 > min_index=a.index(a.min)
- => 7
-head :286 > max_index=a.index(a.max)
- => 3
-head :287 > range=min_index<max_index ? min_index..max_index : max_index..min_index
- => 3..7
-head :288 > a[range]=a[range].reverse
- => [0, 56, 23, 1, 67]
-head :289 > a
- => [5, 23, 4, 0, 56, 23, 1, 67]
+min_index=a.index(a.min)
+ # => 7
+max_index=a.index(a.max)
+ # => 3
+range=min_index<max_index ? min_index..max_index : max_index..min_index
+ # => 3..7
+a[range]=a[range].reverse
+ # => [0, 56, 23, 1, 67]
+a
+ # => [5, 23, 4, 0, 56, 23, 1, 67]
 
