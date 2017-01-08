@@ -205,28 +205,27 @@ a[0..a.size-2].select.with_index { |item, i| puts i if(item<a[i+1]); item<a[i+1]
 #  => 4
 
 # 102. Дан целочисленный массив. Проверить, образует ли он возрастающую последовательность.
-a=[23,4,5,3,22,25,6,34]
-head :267 > a[1..a.size-1].select.with_index(1) { |item, i| item>a[i-1] }.size+1==a.size
- => false
-head :268 > a=[1,2,3,4,5,6,7]
- => [1, 2, 3, 4, 5, 6, 7]
-head :269 > a[1..a.size-1].select.with_index(1) { |item, i| item>a[i-1] }.size+1==a.size
- => true
+def inc_sequence? a
+  a[1..a.size-1].select.with_index(1) { |item, i| item>a[i-1] }.size+1==a.size
+end
+inc_sequence? [23,4,5,3,22,25,6,34]
+ # => false
+inc_sequence? [1,2,3,4,5,6,7]
+ # => true
 
 # 105. Дан целочисленный массив. Если данный массив образует убывающую последовательность, то вывести nil, в противном случае вывести номер первого числа, нарушающего закономерность.
-a=[1,2,3,4,5,6,7]
-head :270 > a.index(a[1..a.size-1].detect.with_index(1) { |item, i| item>a[i-1] })
- => 1
-head :271 > a=[5,4,3,2,1]
- => [5, 4, 3, 2, 1]
-head :272 > a.index(a[1..a.size-1].detect.with_index(1) { |item, i| item>a[i-1] })
- => nil
+def wrong_decr_seq_element a
+  a.index(a[1..a.size-1].detect.with_index(1) { |item, i| p item; item>a[i-1] })
+end
+wrong_decr_seq_element [1,2,3,4,5,6,7]
+ # => 1
+wrong_decr_seq_element [5,4,3,2,1]
+ # => nil
 
 # 108. Дан целочисленный массив и целое число К. Возвести в степень К все элементы массива.
 k=4
 a=[5,4,3,2,1]
-head :275 > a.each_with_index { |item, i| a[i]=a[i]**k }
- => [625, 256, 81, 16, 1]
+a.map! { |item| item=item**k }
 
 # 111. Дан целочисленный массив. Переставить в обратном порядке элементы массива, расположенные между его минимальным и максимальным элементами.
 a=[5,23,4,67,1,23,56,0]
