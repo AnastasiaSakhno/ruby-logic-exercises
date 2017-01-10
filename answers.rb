@@ -32,8 +32,11 @@ a=[1, 0, 2, 3, 2, 5, 6, 7, 2, 1, 1]
 a[1..a.size-2].select.with_index(1) { |item, i| a[i]<a[i-1] && a[i]<a[i+1] }.size
 
 # 21. Дан целочисленный массив. Определить количество участков, на которых его элементы монотонно возрастают.
-rise_count=0
 a=[1, 0, 2, 3, 2, 5, 6, 7, 2, 1, 1]
+# if sequence of one element (e. g. [1]) is ok, then:
+a[1..a.size-1].select.with_index(1) { |item, i| item<=a[i-1] }.size + 1
+# if secuence of at least two elements
+rise_count=0
 to_grow=false
 a[1..a.size-1].each.with_index(1) do |item, i|
  if a[i]<=a[i-1]
