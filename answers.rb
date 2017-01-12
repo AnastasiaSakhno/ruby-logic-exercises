@@ -38,20 +38,8 @@ a.each_cons(3).count { |x,y,z| x>y && y<z }
 a=[1, 0, 2, 3, 2, 5, 6, 7, 2, 1, 1]
 # if sequence of one element (e. g. [1]) is ok, then:
 a.slice_when {|x,y| x>=y }.count
-# if secuence of at least two elements
-rise_count=0
-to_grow=false
-a[1..a.size-1].each.with_index(1) do |item, i|
- if a[i]<=a[i-1]
-  to_grow=false
- else
-  if !to_grow
-   rise_count+=1
-   to_grow=true
-  end
- end
-end
-rise_count
+# if sequence at least of two elements
+a.slice_when {|x,y| x>=y }.count {|x| x.size>1}
 
 # 24. Дано вещественное число R и массив вещественных чисел. Найти элемент массива, который наименее близок к данному числу.
 r=1.1234567
