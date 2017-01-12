@@ -27,20 +27,12 @@ a.map! { |item| item<0 ? a.max : item }
 # 15. Дан целочисленный массив. Проверить, образуют ли элементы арифметическую прогрессию.
 # Если да, то вывести разность прогрессии, если нет - вывести nil.
 a= [1, 2, 3, 4, 5, 6]
-# 1)
 diff=a[1]-a[0]
-a.each_with_index do |item, i|
- break nil if (i>1 && a[i]-a[i-1] != diff)
- break diff if i==a.size-1
-end
-# 2)
-diff_arr=a[1..a.size-1].map.with_index(1) { |item, i| item-a[i-1] }
-diff_uniq=diff_arr.uniq
-diff_uniq.size==1 ? diff_uniq[0] : nil
+!a.each_cons(2).any? { |x, y| y-x != diff } ? diff : nil
 
 # 18. Дан целочисленный массив. Найти количество его локальных минимумов.
 a=[1, 0, 2, 3, 2, 5, 6, 7, 2, 1, 1]
-a[1..a.size-2].select.with_index(1) { |item, i| item<a[i-1] && item<a[i+1] }.size
+a.each_cons(3).count { |x,y,z| x>y && y<z }
 
 # 21. Дан целочисленный массив. Определить количество участков, на которых его элементы монотонно возрастают.
 a=[1, 0, 2, 3, 2, 5, 6, 7, 2, 1, 1]
