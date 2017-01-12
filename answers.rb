@@ -37,7 +37,7 @@ a.each_cons(3).count { |x,y,z| x>y && y<z }
 # 21. Дан целочисленный массив. Определить количество участков, на которых его элементы монотонно возрастают.
 a=[1, 0, 2, 3, 2, 5, 6, 7, 2, 1, 1]
 # if sequence of one element (e. g. [1]) is ok, then:
-a[1..a.size-1].select.with_index(1) { |item, i| item<=a[i-1] }.size + 1
+a.slice_when {|x,y| x>=y }.count
 # if secuence of at least two elements
 rise_count=0
 to_grow=false
